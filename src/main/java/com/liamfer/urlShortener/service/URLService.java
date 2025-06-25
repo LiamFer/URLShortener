@@ -1,5 +1,6 @@
 package com.liamfer.urlShortener.service;
 
+import com.liamfer.urlShortener.DTO.shortURLResponse;
 import com.liamfer.urlShortener.domain.URLEntity;
 import com.liamfer.urlShortener.repository.URLRepository;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,9 @@ public class URLService {
         this.urlRepository = urlRepository;
     }
 
-    public URLEntity shortUrl(String url){
-        return urlRepository.save(new URLEntity(url,this.generateShortcode()));
+    public shortURLResponse shortUrl(String url){
+        URLEntity newURL = urlRepository.save(new URLEntity(url,this.generateShortcode()));
+        return new shortURLResponse(newURL.getId(),newURL.getUrl(),newURL.getShortCode(),newURL.getCreatedAt(),newURL.getUpdatedAt());
     }
 
     private String generateShortcode(){
