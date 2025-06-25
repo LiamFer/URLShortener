@@ -2,6 +2,7 @@ package com.liamfer.urlShortener.controller;
 
 import com.liamfer.urlShortener.DTO.ShortURLBody;
 import com.liamfer.urlShortener.DTO.shortURLResponse;
+import com.liamfer.urlShortener.domain.URLEntity;
 import com.liamfer.urlShortener.service.URLService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,10 @@ public class URLController {
     public ResponseEntity<Void> deleteShortenedUrl(@PathVariable("shortCode") @Valid String shortCode){
         urlService.deleteUrl(shortCode);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/{shortCode}/stats")
+    public ResponseEntity<URLEntity> getShortenedUrlStatistics(@PathVariable("shortCode") @Valid String shortCode){
+        return ResponseEntity.status(HttpStatus.OK).body(urlService.getShortUrlStatistics(shortCode));
     }
 }

@@ -28,6 +28,10 @@ public class URLService {
         return this.newShortURLResponse(url);
     }
 
+    public URLEntity getShortUrlStatistics(String shortCode){
+        return this.findShortUrl(shortCode);
+    }
+
     public shortURLResponse updateShortUrl(String shortCode,String updateUrl){
         URLEntity url = this.findShortUrl(shortCode);
         url.setUrl(updateUrl);
