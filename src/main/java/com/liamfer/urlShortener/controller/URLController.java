@@ -27,8 +27,13 @@ public class URLController {
     }
 
     @PutMapping("/{shortCode}")
-    public ResponseEntity<shortURLResponse> updateShortenedUrl(@PathVariable("shortCode") @Valid String shortCode,
-                                                               @RequestBody @Valid ShortURLBody updateURL){
+    public ResponseEntity<shortURLResponse> updateShortenedUrl(@PathVariable("shortCode") @Valid String shortCode, @RequestBody @Valid ShortURLBody updateURL){
         return ResponseEntity.status(HttpStatus.OK).body(urlService.updateShortUrl(shortCode,updateURL.url()));
+    }
+
+    @DeleteMapping("/{shortCode}")
+    public ResponseEntity<Void> deleteShortenedUrl(@PathVariable("shortCode") @Valid String shortCode){
+        urlService.deleteUrl(shortCode);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

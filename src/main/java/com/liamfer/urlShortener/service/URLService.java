@@ -39,6 +39,12 @@ public class URLService {
         if(url.isPresent()) return url.get();
         throw new ResourceNotFoundException("URL não encontrada.");
     }
+
+    public void deleteUrl(String shortCode){
+        URLEntity url = this.findShortUrl(shortCode);
+        urlRepository.deleteById(url.getId());
+    }
+
     private String generateShortcode(){
         String shortCode = UUID.randomUUID().toString().replace("-","").substring(0,5);
         boolean exists = urlRepository.findByshortCode(shortCode).isPresent();
