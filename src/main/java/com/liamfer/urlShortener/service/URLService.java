@@ -22,13 +22,23 @@ public class URLService {
     }
 
     public shortURLResponse getShortUrl(String shortCode){
-        Optional<URLEntity> url = urlRepository.findByshortCode(shortCode);
-        if(url.isPresent()){
-            return this.newShortURLResponse(url.get());
-        }
-        throw new ResourceNotFoundException("URL não encontrada.");
+        URLEntity url = this.findShortUrl(shortCode);
+        url.increaseAccessCounter();
+        urlRepository.save(url);
+        return this.newShortURLResponse(url);
     }
 
+    public shortURLResponse updateShortUrl(String shortCode,String updateUrl){
+        URLEntity url = this.findShortUrl(shortCode);
+        url.setUrl(updateUrl);
+        return newShortURLResponse(urlRepository.save(url));
+    }
+
+    private URLEntity findShortUrl(String shortCode){
+        Optional<URLEntity> url = urlRepository.findByshortCode(shortCode);
+        if(url.isPresent()) return url.get();
+        throw new ResourceNotFoundException("URL não encontrada.");
+    }
     private String generateShortcode(){
         String shortCode = UUID.randomUUID().toString().replace("-","").substring(0,5);
         boolean exists = urlRepository.findByshortCode(shortCode).isPresent();

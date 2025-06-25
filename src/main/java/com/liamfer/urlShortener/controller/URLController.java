@@ -1,8 +1,7 @@
 package com.liamfer.urlShortener.controller;
 
-import com.liamfer.urlShortener.DTO.newShortURL;
+import com.liamfer.urlShortener.DTO.ShortURLBody;
 import com.liamfer.urlShortener.DTO.shortURLResponse;
-import com.liamfer.urlShortener.domain.URLEntity;
 import com.liamfer.urlShortener.service.URLService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,12 +17,18 @@ public class URLController {
     }
 
     @PostMapping
-    public ResponseEntity<shortURLResponse> shortenNewUrl(@RequestBody @Valid newShortURL newURL){
+    public ResponseEntity<shortURLResponse> shortenNewUrl(@RequestBody @Valid ShortURLBody newURL){
         return ResponseEntity.status(HttpStatus.CREATED).body(urlService.shortUrl(newURL.url()));
     }
 
     @GetMapping("/{shortCode}")
     public ResponseEntity<shortURLResponse> getShortenedUrl(@PathVariable("shortCode") @Valid String shortCode){
         return ResponseEntity.status(HttpStatus.OK).body(urlService.getShortUrl(shortCode));
+    }
+
+    @PutMapping("/{shortCode}")
+    public ResponseEntity<shortURLResponse> updateShortenedUrl(@PathVariable("shortCode") @Valid String shortCode,
+                                                               @RequestBody @Valid ShortURLBody updateURL){
+        return ResponseEntity.status(HttpStatus.OK).body(urlService.updateShortUrl(shortCode,updateURL.url()));
     }
 }

@@ -20,18 +20,22 @@ import java.time.LocalDateTime;
 public class URLEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
     @NotBlank
-    public String url;
-    public String shortCode;
-    public Integer accessCount = 0;
+    private String url;
+    private String shortCode;
+    private Integer accessCount = 0;
     @CreatedDate
-    public LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     @LastModifiedDate
-    public LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     public URLEntity(String url, String shortCode) {
         this.url = url;
         this.shortCode = shortCode;
+    }
+
+    public void increaseAccessCounter(){
+        this.accessCount++;
     }
 }

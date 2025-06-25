@@ -1,5 +1,5 @@
 package com.liamfer.urlShortener.DTO;
 
 
-public record apiError(int code,String message) {
+public record apiError<T>(int code,T message) {
 }
