@@ -24,8 +24,7 @@ public class URLEntity {
     @NotBlank
     public String url;
     public String shortCode;
-    @Column(columnDefinition = "integer default 0")
-    public Integer accessCount;
+    public Integer accessCount = 0;
     @CreatedDate
     public LocalDateTime createdAt;
     @LastModifiedDate

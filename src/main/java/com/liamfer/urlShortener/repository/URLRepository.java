@@ -4,7 +4,9 @@ import com.liamfer.urlShortener.domain.URLEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface URLRepository extends JpaRepository<URLEntity,Long>{
-    URLEntity findByshortCode(String shortCode);
+    Optional<URLEntity> findByshortCode(String shortCode);
 }
